@@ -100,7 +100,3 @@ src/
   main.js
 public/
 index.html
-
-Auteur:
-Projet réalisé par Melina Yorgova dans le cadre de la formation Développeur Web.
-```
