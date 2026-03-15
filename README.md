@@ -76,7 +76,7 @@ Installer les dépendances :
 
 npm install
 
-Lancement du projet
+## Lancement du projet
 
 Pour démarrer le serveur de développement :
 
@@ -86,7 +86,7 @@ Puis ouvrir dans le navigateur l’adresse indiquée dans le terminal, général
 
 http://localhost:5173
 
-Structure du projet:
+## Structure du projet:
 
 src/
   assets/
