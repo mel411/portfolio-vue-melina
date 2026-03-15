@@ -78,7 +78,7 @@ npm install
 
 ---
 
-**## Lancement du projet**
+## Lancement du projet
 
 Pour démarrer le serveur de développement :
 
@@ -90,7 +90,7 @@ http://localhost:5173
 
 ---
 
-**## Structure du projet:**
+## Structure du projet:
 
 src/
   assets/
