@@ -1,6 +1,6 @@
 <template>
   <div id="top">
-    <Header />
+    <Header :active-section="activeSection" />
 
     <main>
       <section id="presentation" class="hero-section">
@@ -86,6 +86,7 @@ import ContactForm from '../components/ContactForm.vue'
 
 export default {
   name: 'Home',
+
   components: {
     Header,
     Footer,
@@ -93,8 +94,10 @@ export default {
     ProjectModal,
     ContactForm,
   },
+
   data() {
     return {
+      activeSection: "presentation",
       showModal: false,
       selectedProject: null,
       projects: [
@@ -106,7 +109,6 @@ export default {
           tech: 'Figma, UI/UX Design',
           description:
             'Conception d’interfaces web avec Figma incluant prototypes interactifs, hiérarchie visuelle et maquettes responsives pour un projet e-commerce.',
-          demo: '#',
           github: '#',
         },
         {
@@ -117,8 +119,7 @@ export default {
           tech: 'React, JavaScript, CSS',
           description:
             'Développement d’un CV en ligne dynamique avec React, reposant sur une architecture de composants réutilisables et une interface moderne.',
-          demo: '#',
-          github: '#',
+          github: 'https://github.com/mel411/cv-react',
         },
         {
           title: 'Site dynamique avec AngularJS',
@@ -128,8 +129,7 @@ export default {
           image: new URL('../assets/images/angular.png', import.meta.url).href,
           description:
             'Réalisation d’un site dynamique avec AngularJS intégrant navigation, contenu interactif et structuration front-end orientée expérience utilisateur.',
-          demo: '#',
-          github: '#',
+          github: 'https://github.com/mel411/au-petit-village',
         },
         {
           title: 'API sécurisée avec Node.js',
@@ -139,8 +139,7 @@ export default {
           tech: 'Node.js, Express, MongoDB',
           description:
             'Développement d’une API sécurisée avec Node.js et Express incluant authentification, gestion des utilisateurs, des catways et des réservations avec MongoDB.',
-          demo: '#',
-          github: '#',
+          github: 'https://github.com/mel411/catway-api',
         },
         {
           title: 'Application e-commerce Symfony',
@@ -150,22 +149,50 @@ export default {
           tech: 'Symfony, PHP, MySQL, Twig',
           description:
             'Développement d’une application e-commerce avec Symfony incluant catalogue produits, panier, interface administrateur et gestion des utilisateurs.',
-          demo: '#',
-          github: '#',
+          github: 'https://github.com/mel411/stubborn-symfony',
         },
       ],
     }
   },
-  methods: {
-    openProject(project) {
-      this.selectedProject = project
-      this.showModal = true
-    },
-    closeProject() {
-      this.showModal = false
-      this.selectedProject = null
-    },
+
+  mounted() {
+    this.setupSectionObserver();
   },
+  beforeUnmount() {
+    if (this.sectionObserver) {
+      this.sectionObserver.disconnect();
+    }
+  },
+
+  methods: {
+  openProject(project) {
+    this.selectedProject = project;
+    this.showModal = true;
+  },
+  closeProject() {
+    this.showModal = false;
+    this.selectedProject = null;
+  },
+  setupSectionObserver() {
+    const sections = document.querySelectorAll("section[id]");
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            this.activeSection = entry.target.id;
+          }
+        });
+      },
+      {
+        threshold: 0.45,
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    this.sectionObserver = observer;
+  }
+}
 }
 </script>
 

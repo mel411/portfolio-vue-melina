@@ -1,22 +1,48 @@
 <template>
   <header class="site-header">
-    <div class="brand">
-      <a href="#top" class="brand-name">Melina Yorgova</a>
-      <p class="brand-role">Développeuse web full-stack en formation</p>
-    </div>
+    <a href="#top" class="brand-link" aria-label="Retour en haut de la page">
+      <div class="logo-mark">MY</div>
+      <div class="brand-text">
+        <span class="brand-name">Melina Yorgova</span>
+        <span class="brand-role">Développeuse web full-stack en formation</span>
+      </div>
+    </a>
 
-    <nav class="nav-menu">
-      <a href="#presentation">Présentation</a>
-      <a href="#creations">Créations</a>
-      <a href="#contact">Contact</a>
+    <nav class="nav-menu" aria-label="Navigation principale">
+      <a
+        href="#presentation"
+        :class="{ active: activeSection === 'presentation' }"
+      >
+        Présentation
+      </a>
+
+      <a
+        href="#creations"
+        :class="{ active: activeSection === 'creations' }"
+      >
+        Créations
+      </a>
+
+      <a
+        href="#contact"
+        :class="{ active: activeSection === 'contact' }"
+      >
+        Contact
+      </a>
     </nav>
   </header>
 </template>
 
 <script>
 export default {
-  name: 'Header',
-}
+  name: "Header",
+  props: {
+    activeSection: {
+      type: String,
+      default: "",
+    },
+  },
+};
 </script>
 
 <style scoped>
@@ -33,14 +59,34 @@ export default {
   border-bottom: 1px solid #e5ddd2;
 }
 
-.brand {
+.brand-link {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-decoration: none;
+}
+
+.logo-mark {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #1f1c19;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.brand-text {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
 .brand-name {
-  text-decoration: none;
   color: #1f1f1f;
   font-size: 1.35rem;
   font-weight: 700;
@@ -50,7 +96,6 @@ export default {
 .brand-role {
   font-size: 0.85rem;
   color: #7c6f62;
-  margin: 0;
 }
 
 .nav-menu {
@@ -69,7 +114,7 @@ export default {
 }
 
 .nav-menu a::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: -7px;
@@ -81,10 +126,12 @@ export default {
   transition: transform 0.25s ease;
 }
 
-.nav-menu a:hover {
+.nav-menu a:hover,
+.nav-menu a.active {
   color: #8b6f52;
 }
 
+.nav-menu a.active::after,
 .nav-menu a:hover::after {
   transform: scaleX(1);
 }
@@ -96,8 +143,7 @@ export default {
     padding: 20px 24px;
   }
 
-  .brand {
-    align-items: center;
+  .brand-text {
     text-align: center;
   }
 

@@ -1,53 +1,61 @@
 <template>
   <form class="contact-form" @submit.prevent="submitForm">
     <div class="form-group">
-      <label>Nom</label>
-      <input type="text" v-model="name" required />
+      <label for="fullname">Nom / Prénom</label>
+      <input id="fullname" type="text" v-model="fullName" required />
     </div>
 
     <div class="form-group">
-      <label>Email</label>
-      <input type="email" v-model="email" required />
+      <label for="subject">Objet</label>
+      <input id="subject" type="text" v-model="subject" required />
     </div>
 
     <div class="form-group">
-      <label>Message</label>
-      <textarea v-model="message" required></textarea>
+      <label for="message">Message</label>
+      <textarea id="message" v-model="message" required></textarea>
     </div>
 
     <button type="submit">Envoyer</button>
 
-    <p v-if="sent" class="success">Message envoyé avec succès !</p>
+    <p v-if="sent" class="success">
+      Votre messagerie s’est ouverte avec le message prêt à être envoyé.
+    </p>
   </form>
 </template>
 
 <script>
 export default {
-  name: 'ContactForm',
-
+  name: "ContactForm",
   data() {
     return {
-      name: '',
-      email: '',
-      message: '',
+      fullName: "",
+      subject: "",
+      message: "",
       sent: false,
-    }
+      contactEmail: import.meta.env.VITE_CONTACT_EMAIL || "",
+    };
   },
-
   methods: {
     submitForm() {
-      console.log('Nom:', this.name)
-      console.log('Email:', this.email)
-      console.log('Message:', this.message)
+      if (!this.contactEmail) {
+        alert("Aucune adresse email n’a été définie dans le fichier .env.");
+        return;
+      }
 
-      this.sent = true
+      const body = `Nom / Prénom : ${this.fullName}\n\nMessage :\n${this.message}`;
+      const mailtoLink = `mailto:${this.contactEmail}?subject=${encodeURIComponent(
+        this.subject
+      )}&body=${encodeURIComponent(body)}`;
 
-      this.name = ''
-      this.email = ''
-      this.message = ''
+      window.location.href = mailtoLink;
+
+      this.sent = true;
+      this.fullName = "";
+      this.subject = "";
+      this.message = "";
     },
   },
-}
+};
 </script>
 
 <style scoped>
@@ -64,30 +72,37 @@ export default {
 label {
   display: block;
   margin-bottom: 6px;
+  color: #3f3832;
+  font-weight: 600;
 }
 
 input,
 textarea {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
+  padding: 12px;
+  border: 1px solid #ddd0c2;
+  border-radius: 10px;
+  background: #fff;
 }
 
 textarea {
-  height: 120px;
+  height: 140px;
+  resize: vertical;
 }
 
 button {
-  background: #222;
+  background: #1f1c19;
   color: white;
-  padding: 10px 18px;
+  padding: 12px 20px;
   border: none;
+  border-radius: 999px;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .success {
   margin-top: 15px;
-  color: green;
+  color: #6e5640;
+  line-height: 1.6;
 }
 </style>

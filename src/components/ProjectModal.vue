@@ -16,8 +16,23 @@
       </p>
 
       <div class="modal-links">
-        <a :href="demo" target="_blank" rel="noopener noreferrer">Voir le projet</a>
-        <a :href="github" target="_blank" rel="noopener noreferrer">Voir le GitHub</a>
+        <a
+          v-if="demo && demo !== '#'"
+          :href="demo"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Voir le projet
+        </a>
+
+        <a
+          v-if="github && github !== '#'"
+          :href="github"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Voir le GitHub
+        </a>
       </div>
     </div>
   </div>
