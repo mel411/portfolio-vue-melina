@@ -63,7 +63,7 @@ Avant de lancer le projet, il faut avoir installé :
 
 ## Installation
 
-Cloner le dépôt :
+Cloner le dépôt
 
 ```bash
 git clone https://github.com/mel411/portfolio-vue-melina.git
